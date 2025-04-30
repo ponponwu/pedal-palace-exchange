@@ -8,11 +8,18 @@ import {
   MessageCircle, 
   Bookmark, 
   Menu, 
-  X 
+  X,
+  LogOut
 } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, signOut } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   return (
     <header className="sticky top-0 z-30 w-full bg-white border-b shadow-sm">
@@ -58,11 +65,28 @@ const Navbar = () => {
               <Search className="h-5 w-5" />
             </Button>
           </Link>
-          <Link to="/login">
-            <Button variant="ghost" className="text-gray-700 hover:text-marketplace-blue">
-              Sign In
-            </Button>
-          </Link>
+          
+          {user ? (
+            <>
+              <Link to="/profile">
+                <Button variant="ghost" className="text-gray-700 hover:text-marketplace-blue">
+                  <User className="h-5 w-5 mr-2" />
+                  Profile
+                </Button>
+              </Link>
+              <Button variant="ghost" className="text-gray-700 hover:text-marketplace-blue" onClick={handleSignOut}>
+                <LogOut className="h-5 w-5 mr-2" />
+                Sign Out
+              </Button>
+            </>
+          ) : (
+            <Link to="/login">
+              <Button variant="ghost" className="text-gray-700 hover:text-marketplace-blue">
+                Sign In
+              </Button>
+            </Link>
+          )}
+          
           <Link to="/upload">
             <Button className="bg-marketplace-blue hover:bg-blue-600 text-white">
               Sell a Bike
@@ -85,7 +109,7 @@ const Navbar = () => {
           <div className="container px-4 py-6 mx-auto">
             <nav className="flex flex-col space-y-4">
               <Link 
-                to="/" 
+                to="/search" 
                 className="flex items-center p-3 rounded-lg hover:bg-gray-100"
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -111,23 +135,49 @@ const Navbar = () => {
                 <span className="text-gray-700">Messages</span>
               </Link>
               
-              <Link 
-                to="/profile" 
-                className="flex items-center p-3 rounded-lg hover:bg-gray-100"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <User className="w-5 h-5 mr-3 text-gray-500" />
-                <span className="text-gray-700">Profile</span>
-              </Link>
+              {user ? (
+                <>
+                  <Link 
+                    to="/profile" 
+                    className="flex items-center p-3 rounded-lg hover:bg-gray-100"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <User className="w-5 h-5 mr-3 text-gray-500" />
+                    <span className="text-gray-700">Profile</span>
+                  </Link>
+                  
+                  <button 
+                    className="flex items-center p-3 rounded-lg hover:bg-gray-100 w-full text-left"
+                    onClick={() => {
+                      handleSignOut();
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    <LogOut className="w-5 h-5 mr-3 text-gray-500" />
+                    <span className="text-gray-700">Sign Out</span>
+                  </button>
+                </>
+              ) : (
+                <Link 
+                  to="/login" 
+                  className="flex items-center p-3 rounded-lg hover:bg-gray-100"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <User className="w-5 h-5 mr-3 text-gray-500" />
+                  <span className="text-gray-700">Sign In</span>
+                </Link>
+              )}
               
               <div className="pt-6">
-                <Link to="/login">
-                  <Button variant="outline" className="w-full mb-3">
-                    Sign In
-                  </Button>
-                </Link>
+                {!user && (
+                  <Link to="/login">
+                    <Button variant="outline" className="w-full mb-3" onClick={() => setIsMenuOpen(false)}>
+                      Sign In
+                    </Button>
+                  </Link>
+                )}
                 <Link to="/upload">
-                  <Button className="w-full bg-marketplace-blue hover:bg-blue-600">
+                  <Button className="w-full bg-marketplace-blue hover:bg-blue-600" onClick={() => setIsMenuOpen(false)}>
                     Sell a Bike
                   </Button>
                 </Link>
