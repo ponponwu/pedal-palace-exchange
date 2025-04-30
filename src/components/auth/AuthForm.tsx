@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from '@/hooks/use-toast';
 
 type AuthFormProps = {
   type: 'login' | 'register';
@@ -11,6 +13,9 @@ const AuthForm = ({ type }: AuthFormProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  
+  const { signIn, signUp, signInWithGoogle, signInWithFacebook } = useAuth();
   
   const isLogin = type === 'login';
   const title = isLogin ? 'Sign In' : 'Create an Account';
@@ -20,10 +25,37 @@ const AuthForm = ({ type }: AuthFormProps) => {
     : "Already have an account? Sign In";
   const altLink = isLogin ? '/register' : '/login';
   
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ email, password, name });
-    // Handle authentication logic here
+    setIsLoading(true);
+    
+    try {
+      if (isLogin) {
+        await signIn(email, password);
+      } else {
+        await signUp(email, password, name);
+      }
+    } catch (error) {
+      console.error('Authentication error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  const handleGoogleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+    } catch (error) {
+      console.error('Google sign in error:', error);
+    }
+  };
+  
+  const handleFacebookSignIn = async () => {
+    try {
+      await signInWithFacebook();
+    } catch (error) {
+      console.error('Facebook sign in error:', error);
+    }
   };
   
   return (
@@ -41,6 +73,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
       <div className="space-y-4 mb-6">
         <button 
           type="button" 
+          onClick={handleGoogleSignIn}
           className="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,6 +87,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
         
         <button 
           type="button" 
+          onClick={handleFacebookSignIn}
           className="w-full flex items-center justify-center gap-3 bg-[#1877F2] rounded-lg px-4 py-3 text-white font-medium hover:bg-[#166FE5] transition-colors"
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -127,8 +161,12 @@ const AuthForm = ({ type }: AuthFormProps) => {
           </div>
         )}
         
-        <Button type="submit" className="w-full bg-marketplace-blue hover:bg-blue-600">
-          {buttonText}
+        <Button 
+          type="submit" 
+          className="w-full bg-marketplace-blue hover:bg-blue-600"
+          disabled={isLoading}
+        >
+          {isLoading ? 'Loading...' : buttonText}
         </Button>
       </form>
       
