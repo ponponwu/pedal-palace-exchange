@@ -7,6 +7,7 @@ import MainLayout from '@/components/layout/MainLayout';
 import { useAuth } from '@/hooks/useAuth';
 import { useSellBikeForm } from '@/hooks/useSellBikeForm';
 import { SellBikeFormValues } from '@/components/sell/types';
+import { Form } from '@/components/ui/form';
 
 import BasicDetailsStep from '@/components/sell/BasicDetailsStep';
 import PhotosStep from '@/components/sell/PhotosStep';
@@ -92,20 +93,22 @@ const UploadBike = () => {
           />
 
           <div className="p-4 sm:p-6">
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              {/* Display current step content */}
-              {steps[currentStep]}
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)}>
+                {/* Display current step content */}
+                {steps[currentStep]}
 
-              {/* Navigation buttons */}
-              <StepNavigation 
-                currentStep={currentStep}
-                totalSteps={totalSteps}
-                prevStep={prevStep}
-                nextStep={nextStep}
-                form={form}
-                isSubmitting={formState.isSubmitting}
-              />
-            </form>
+                {/* Navigation buttons */}
+                <StepNavigation 
+                  currentStep={currentStep}
+                  totalSteps={totalSteps}
+                  prevStep={prevStep}
+                  nextStep={nextStep}
+                  form={form}
+                  isSubmitting={formState.isSubmitting}
+                />
+              </form>
+            </Form>
           </div>
         </div>
       </div>

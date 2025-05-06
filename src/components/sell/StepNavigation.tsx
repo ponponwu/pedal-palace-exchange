@@ -21,6 +21,9 @@ const StepNavigation = ({
   form,
   isSubmitting
 }: StepNavigationProps) => {
+  const isLastStep = currentStep === totalSteps - 1;
+  const isFormValid = form.formState.isValid;
+
   return (
     <div className="mt-8 flex justify-between">
       <Button
@@ -32,7 +35,7 @@ const StepNavigation = ({
         Previous
       </Button>
 
-      {currentStep < totalSteps - 1 ? (
+      {!isLastStep ? (
         <Button 
           type="button"
           onClick={nextStep}
@@ -43,7 +46,7 @@ const StepNavigation = ({
       ) : (
         <Button 
           type="submit"
-          disabled={isSubmitting || !form.formState.isValid}
+          disabled={isSubmitting || !isFormValid}
         >
           {isSubmitting ? 'Submitting...' : 'List Bike for Sale'}
         </Button>
