@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -16,6 +15,7 @@ import BasicDetailsStep from '@/components/sell/BasicDetailsStep';
 import PhotosStep from '@/components/sell/PhotosStep';
 import PricingLocationStep from '@/components/sell/PricingLocationStep';
 import ReviewStep from '@/components/sell/ReviewStep';
+import { SellBikeFormValues } from '@/components/sell/types';
 
 // Define the schema for the form
 const sellBikeSchema = z.object({
@@ -37,8 +37,6 @@ const sellBikeSchema = z.object({
   location: z.string().min(1, { message: "Location is required" }),
   contactMethod: z.string().min(1, { message: "Contact method is required" }),
 });
-
-type SellBikeFormValues = z.infer<typeof sellBikeSchema>;
 
 const UploadBike = () => {
   const { user } = useAuth();

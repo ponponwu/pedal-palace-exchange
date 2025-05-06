@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { 
@@ -18,6 +17,7 @@ import {
   SelectTrigger, 
   SelectValue 
 } from '@/components/ui/select';
+import { SellBikeFormValues } from './types';
 
 // Generate years from 1980 to current year
 const currentYear = new Date().getFullYear();
@@ -46,19 +46,8 @@ const frameSizes = [
   "13\"", "15\"", "17\"", "19\"", "21\""
 ];
 
-type FormValues = {
-  title: string;
-  brand: string;
-  model: string;
-  year: string;
-  bikeType: string;
-  frameSize: string;
-  description: string;
-  [key: string]: any;
-};
-
 interface BasicDetailsStepProps {
-  form: UseFormReturn<FormValues>;
+  form: UseFormReturn<SellBikeFormValues>;
 }
 
 const BasicDetailsStep = ({ form }: BasicDetailsStepProps) => {

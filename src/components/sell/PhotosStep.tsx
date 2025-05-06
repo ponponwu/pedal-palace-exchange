@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
@@ -12,15 +11,10 @@ import {
   SelectTrigger, 
   SelectValue 
 } from '@/components/ui/select';
-
-type FormValues = {
-  photos: any[];
-  condition: string;
-  [key: string]: any;
-};
+import { SellBikeFormValues } from './types';
 
 interface PhotosStepProps {
-  form: UseFormReturn<FormValues>;
+  form: UseFormReturn<SellBikeFormValues>;
 }
 
 const conditions = [

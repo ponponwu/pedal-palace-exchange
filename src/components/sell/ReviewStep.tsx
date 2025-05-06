@@ -1,27 +1,11 @@
-
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
-
-type FormValues = {
-  title: string;
-  brand: string;
-  model: string;
-  year: string;
-  bikeType: string;
-  frameSize: string;
-  description: string;
-  photos: any[];
-  condition: string;
-  price: string;
-  location: string;
-  contactMethod: string;
-  [key: string]: any;
-};
+import { SellBikeFormValues } from './types';
 
 interface ReviewStepProps {
-  form: UseFormReturn<FormValues>;
+  form: UseFormReturn<SellBikeFormValues>;
 }
 
 const ReviewStep = ({ form }: ReviewStepProps) => {

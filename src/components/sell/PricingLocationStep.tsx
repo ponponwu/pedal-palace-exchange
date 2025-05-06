@@ -1,19 +1,12 @@
-
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-
-type FormValues = {
-  price: string;
-  location: string;
-  contactMethod: string;
-  [key: string]: any;
-};
+import { SellBikeFormValues } from './types';
 
 interface PricingLocationStepProps {
-  form: UseFormReturn<FormValues>;
+  form: UseFormReturn<SellBikeFormValues>;
 }
 
 const PricingLocationStep = ({ form }: PricingLocationStepProps) => {
