@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   User,
-  Bicycle,
+  Bike,
   MessageCircle,
   Settings,
   LogOut
@@ -83,7 +83,7 @@ const Profile = () => {
         <Button onClick={() => navigate('/upload')} variant="outline">發佈新車</Button>
       </div>
       <div className="text-center py-12 border rounded-lg bg-gray-50">
-        <Bicycle className="mx-auto h-12 w-12 text-gray-400" />
+        <Bike className="mx-auto h-12 w-12 text-gray-400" />
         <h3 className="mt-4 text-lg font-medium text-gray-900">您還沒有發佈任何自行車</h3>
         <p className="mt-2 text-sm text-gray-500">開始發佈您的第一輛自行車吧</p>
         <Button className="mt-4 bg-marketplace-blue hover:bg-blue-600" onClick={() => navigate('/upload')}>
@@ -205,7 +205,7 @@ const Profile = () => {
                   <span className="hidden sm:inline-block">個人資料</span>
                 </TabsTrigger>
                 <TabsTrigger value="my-bicycles" className="flex flex-col items-center sm:flex-row sm:items-center gap-1">
-                  <Bicycle className="h-4 w-4" />
+                  <Bike className="h-4 w-4" />
                   <span className="hidden sm:inline-block">我的自行車</span>
                 </TabsTrigger>
                 <TabsTrigger value="messages" className="flex flex-col items-center sm:flex-row sm:items-center gap-1">
