@@ -48,13 +48,13 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center space-x-1">
           <Link to="/search" className="px-3 py-2 text-gray-700 hover:text-marketplace-blue transition-colors">
-            Browse
+            瀏覽
           </Link>
           <Link to="/favorites" className="px-3 py-2 text-gray-700 hover:text-marketplace-blue transition-colors">
-            Favorites
+            收藏
           </Link>
           <Link to="/messages" className="px-3 py-2 text-gray-700 hover:text-marketplace-blue transition-colors">
-            Messages
+            消息
           </Link>
         </nav>
 
@@ -71,25 +71,25 @@ const Navbar = () => {
               <Link to="/profile">
                 <Button variant="ghost" className="text-gray-700 hover:text-marketplace-blue">
                   <User className="h-5 w-5 mr-2" />
-                  Profile
+                  個人中心
                 </Button>
               </Link>
               <Button variant="ghost" className="text-gray-700 hover:text-marketplace-blue" onClick={handleSignOut}>
                 <LogOut className="h-5 w-5 mr-2" />
-                Sign Out
+                登出
               </Button>
             </>
           ) : (
             <Link to="/login">
               <Button variant="ghost" className="text-gray-700 hover:text-marketplace-blue">
-                Sign In
+                登入
               </Button>
             </Link>
           )}
           
           <Link to="/upload">
             <Button className="bg-marketplace-blue hover:bg-blue-600 text-white">
-              Sell a Bike
+              出售自行車
             </Button>
           </Link>
         </div>
@@ -114,7 +114,7 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Search className="w-5 h-5 mr-3 text-gray-500" />
-                <span className="text-gray-700">Browse Bikes</span>
+                <span className="text-gray-700">瀏覽自行車</span>
               </Link>
               
               <Link 
@@ -123,7 +123,7 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 <Bookmark className="w-5 h-5 mr-3 text-gray-500" />
-                <span className="text-gray-700">Favorites</span>
+                <span className="text-gray-700">我的收藏</span>
               </Link>
               
               <Link 
@@ -132,7 +132,7 @@ const Navbar = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 <MessageCircle className="w-5 h-5 mr-3 text-gray-500" />
-                <span className="text-gray-700">Messages</span>
+                <span className="text-gray-700">消息中心</span>
               </Link>
               
               {user ? (
@@ -143,7 +143,7 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <User className="w-5 h-5 mr-3 text-gray-500" />
-                    <span className="text-gray-700">Profile</span>
+                    <span className="text-gray-700">個人中心</span>
                   </Link>
                   
                   <button 
@@ -154,7 +154,7 @@ const Navbar = () => {
                     }}
                   >
                     <LogOut className="w-5 h-5 mr-3 text-gray-500" />
-                    <span className="text-gray-700">Sign Out</span>
+                    <span className="text-gray-700">登出</span>
                   </button>
                 </>
               ) : (
@@ -164,7 +164,7 @@ const Navbar = () => {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <User className="w-5 h-5 mr-3 text-gray-500" />
-                  <span className="text-gray-700">Sign In</span>
+                  <span className="text-gray-700">登入</span>
                 </Link>
               )}
               
@@ -172,13 +172,13 @@ const Navbar = () => {
                 {!user && (
                   <Link to="/login">
                     <Button variant="outline" className="w-full mb-3" onClick={() => setIsMenuOpen(false)}>
-                      Sign In
+                      登入
                     </Button>
                   </Link>
                 )}
                 <Link to="/upload">
                   <Button className="w-full bg-marketplace-blue hover:bg-blue-600" onClick={() => setIsMenuOpen(false)}>
-                    Sell a Bike
+                    出售自行車
                   </Button>
                 </Link>
               </div>
