@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import BicycleDetail from "./pages/BicycleDetail";
 import NotFound from "./pages/NotFound";
 import AuthCallback from "./pages/AuthCallback";
+import UploadBike from "./pages/UploadBike";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/register" element={<Register />} />
             <Route path="/bicycle/:id" element={<BicycleDetail />} />
             <Route path="/auth/callback" element={<AuthCallback />} />
+            <Route path="/upload" element={<UploadBike />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
