@@ -1,138 +1,189 @@
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import BicycleGrid from '@/components/bicycles/BicycleGrid';
+import { Button } from '@/components/ui/button';
+import { Slider } from '@/components/ui/slider';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTranslation } from 'react-i18next';
-import BicycleGrid from '../bicycles/BicycleGrid';
-import { Bike } from 'lucide-react';
 
-// Sample bicycle data
-const sampleBicycles = [
+// Mock data
+const bicycles = [
   {
     id: '1',
-    title: 'Specialized Stumpjumper Expert',
+    title: 'Specialized Stumpjumper Expert Carbon',
     price: 2800,
     location: 'Seattle, WA',
     condition: 'Like New',
-    image: 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-4.0.3',
-    category: 'Mountain Bike'
+    brand: 'Specialized',
+    imageUrl: 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
   },
   {
     id: '2',
-    title: 'Trek Domane SL6',
-    price: 2200,
+    title: 'Trek Fuel EX 8 29',
+    price: 1900,
     location: 'Portland, OR',
     condition: 'Good',
-    image: 'https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?ixlib=rb-4.0.3',
-    category: 'Road Bike'
+    brand: 'Trek',
+    imageUrl: 'https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
   },
   {
     id: '3',
-    title: 'Giant Revolt Advanced',
-    price: 1800,
-    location: 'San Francisco, CA',
+    title: 'Canyon Neuron CF SL 8',
+    price: 3200,
+    location: 'Denver, CO',
     condition: 'Excellent',
-    image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-4.0.3',
-    category: 'Gravel Bike'
+    brand: 'Canyon',
+    imageUrl: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
   },
   {
     id: '4',
-    title: 'Cannondale Synapse',
-    price: 1500,
-    location: 'Los Angeles, CA',
-    condition: 'Good',
-    image: 'https://images.unsplash.com/photo-1511994298241-608e28f14fde?ixlib=rb-4.0.3',
-    category: 'Road Bike'
-  }
+    title: 'Santa Cruz Hightower LT Carbon',
+    price: 4500,
+    location: 'Boulder, CO',
+    condition: 'Like New',
+    brand: 'Santa Cruz',
+    imageUrl: 'https://images.unsplash.com/photo-1511994298241-608e28f14fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '5',
+    title: 'YT Jeffsy CF Pro Race',
+    price: 3800,
+    location: 'Golden, CO',
+    condition: 'Excellent',
+    brand: 'YT',
+    imageUrl: 'https://images.unsplash.com/photo-1623005329937-eb70fb656e91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: '6',
+    title: 'Pivot Mach 4 SL Pro XT/XTR',
+    price: 5200,
+    location: 'Sedona, AZ',
+    condition: 'Like New',
+    brand: 'Pivot',
+    imageUrl: 'https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80',
+  },
 ];
 
-interface SearchResultsProps {
-  query: string;
-  filters: {
-    priceRange: string;
-    type: string;
-    brand: string;
-    location: string;
-  };
-}
-
-const SearchResults: React.FC<SearchResultsProps> = ({ query, filters }) => {
+const SearchResults = () => {
   const { t } = useTranslation();
-  const [bicycles, setBicycles] = useState(sampleBicycles);
-  const [loading, setLoading] = useState(false);
-
-  // This would use real API in production
-  useEffect(() => {
-    setLoading(true);
-    
-    // Simulate API call with delay
-    setTimeout(() => {
-      // Filter bicycles based on search query and filters
-      const filteredBicycles = sampleBicycles.filter((bike) => {
-        // Filter by search query
-        if (query && !bike.title.toLowerCase().includes(query.toLowerCase())) {
-          return false;
-        }
-        
-        // Filter by type/category
-        if (filters.type && bike.category !== filters.type) {
-          return false;
-        }
-        
-        // Filter by location
-        if (filters.location && !bike.location.includes(filters.location)) {
-          return false;
-        }
-        
-        // Filter by price range
-        if (filters.priceRange) {
-          const [min, max] = filters.priceRange.split('-').map(Number);
-          if (bike.price < min || (max && bike.price > max)) {
-            return false;
-          }
-        }
-        
-        return true;
-      });
-      
-      setBicycles(filteredBicycles);
-      setLoading(false);
-    }, 500);
-  }, [query, filters]);
-
-  if (loading) {
-    return (
-      <div className="py-12 text-center">
-        <div className="animate-pulse flex flex-col items-center">
-          <Bike className="h-12 w-12 text-gray-400 mb-4" />
-          <div className="h-4 bg-gray-200 rounded w-1/4 mb-2.5"></div>
-          <div className="h-2 bg-gray-200 rounded w-1/2"></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (bicycles.length === 0) {
-    return (
-      <div className="py-12 text-center">
-        <Bike className="mx-auto h-12 w-12 text-gray-400" />
-        <h3 className="mt-4 text-lg font-medium text-gray-900">沒有找到符合條件的自行車</h3>
-        <p className="mt-2 text-sm text-gray-500">請嘗試調整您的搜尋條件</p>
-      </div>
-    );
-  }
+  const [priceRange, setPriceRange] = React.useState([0, 5000]);
+  const [filterVisible, setFilterVisible] = React.useState(false);
 
   return (
-    <div>
-      <div className="mb-6">
-        <p className="text-gray-600">找到 {bicycles.length} 輛自行車</p>
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">{t('searchResults')}</h1>
+        <Button 
+          variant="outline" 
+          onClick={() => setFilterVisible(!filterVisible)}
+          className="lg:hidden"
+        >
+          {filterVisible ? t('hideFilters') : t('showFilters')}
+        </Button>
       </div>
-      <BicycleGrid bicycles={bicycles.map(bike => ({
-        id: bike.id,
-        title: bike.title,
-        price: bike.price,
-        location: bike.location,
-        condition: bike.condition,
-        image: bike.image
-      }))} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        {/* Filters */}
+        <div className={`${filterVisible ? 'block' : 'hidden'} lg:block`}>
+          {/* Category Filter */}
+          <div className="mb-6">
+            <h3 className="font-medium mb-3">{t('categories')}</h3>
+            <div className="space-y-2">
+              {['Mountain Bike', 'Road Bike', 'City Bike', 'Electric Bike', 'Kids Bike'].map((category) => (
+                <div key={category} className="flex items-center">
+                  <input 
+                    type="checkbox" 
+                    id={category.toLowerCase().replace(' ', '-')}
+                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <label htmlFor={category.toLowerCase().replace(' ', '-')} className="ml-2 text-sm text-gray-700">
+                    {category}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Price Range Filter */}
+          <div className="mb-6">
+            <h3 className="font-medium mb-3">{t('priceRange')}</h3>
+            <div className="px-2">
+              <Slider 
+                defaultValue={priceRange} 
+                max={5000} 
+                step={100}
+                onValueChange={setPriceRange}
+              />
+              <div className="flex justify-between mt-2 text-sm text-gray-500">
+                <span>${priceRange[0]}</span>
+                <span>${priceRange[1]}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Condition Filter */}
+          <div className="mb-6">
+            <h3 className="font-medium mb-3">{t('condition')}</h3>
+            <div className="space-y-2">
+              {['New', 'Like New', 'Good', 'Fair', 'Poor'].map((condition) => (
+                <div key={condition} className="flex items-center">
+                  <input 
+                    type="checkbox" 
+                    id={condition.toLowerCase().replace(' ', '-')}
+                    className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  />
+                  <label htmlFor={condition.toLowerCase().replace(' ', '-')} className="ml-2 text-sm text-gray-700">
+                    {condition}
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Reset Filters Button */}
+          <Button variant="outline" className="w-full">
+            {t('resetFilters')}
+          </Button>
+        </div>
+
+        {/* Results */}
+        <div className="lg:col-span-3">
+          <Tabs defaultValue="grid">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <span className="text-sm text-gray-500">{bicycles.length} {t('resultsFound')}</span>
+              </div>
+              <TabsList>
+                <TabsTrigger value="grid">{t('grid')}</TabsTrigger>
+                <TabsTrigger value="list">{t('list')}</TabsTrigger>
+              </TabsList>
+            </div>
+            
+            <TabsContent value="grid" className="mt-0">
+              <BicycleGrid bicycles={bicycles} />
+            </TabsContent>
+            
+            <TabsContent value="list" className="mt-0">
+              {/* List view implementation */}
+              <div className="space-y-4">
+                {bicycles.map((bicycle) => (
+                  <div key={bicycle.id} className="border rounded-lg overflow-hidden flex">
+                    <img 
+                      src={bicycle.imageUrl} 
+                      alt={bicycle.title} 
+                      className="w-32 h-32 object-cover"
+                    />
+                    <div className="p-4">
+                      <h3 className="font-medium">{bicycle.title}</h3>
+                      <p className="text-lg font-bold text-marketplace-green">${bicycle.price}</p>
+                      <p className="text-sm text-gray-500">{bicycle.location} • {bicycle.condition}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
     </div>
   );
 };
