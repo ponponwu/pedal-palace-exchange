@@ -15,6 +15,7 @@ import AuthCallback from "./pages/AuthCallback";
 import UploadBike from "./pages/UploadBike";
 import Profile from "./pages/Profile";
 import Search from "./pages/Search";
+import Messages from "./pages/Messages";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -36,6 +37,7 @@ function App() {
               <Route path="/upload" element={<UploadBike />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/search" element={<Search />} />
+              <Route path="/messages" element={<Messages />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AuthProvider>

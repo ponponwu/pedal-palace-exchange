@@ -3,8 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
 import { Button } from '@/components/ui/button';
-import { Search } from 'lucide-react';
+import { Search, MessageCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import SearchResults from '@/components/search/SearchResults';
 
 const SearchPage = () => {
@@ -44,7 +45,15 @@ const SearchPage = () => {
     <MainLayout>
       <div className="py-10 bg-gray-50">
         <div className="container px-4 mx-auto">
-          <h1 className="text-3xl font-bold text-center mb-6">{t('search')}</h1>
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-3xl font-bold">{t('search')}</h1>
+            <Link to="/messages">
+              <Button variant="outline" className="flex items-center gap-2">
+                <MessageCircle className="h-4 w-4" />
+                {t('myMessages')}
+              </Button>
+            </Link>
+          </div>
           
           <div className="max-w-3xl mx-auto mb-10">
             <form onSubmit={handleSearch}>

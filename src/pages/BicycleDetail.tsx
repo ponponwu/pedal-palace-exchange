@@ -86,7 +86,7 @@ const BicycleDetail = () => {
 
             {/* Make Offer Button */}
             <div className="mt-4">
-              <MakeOfferDialog bicycleTitle={bicycle.title} />
+              <MakeOfferDialog bicycleTitle={bicycle.title} bicycleId={id} />
             </div>
             
             {/* Specifications */}

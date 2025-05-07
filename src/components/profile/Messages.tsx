@@ -9,6 +9,10 @@ const Messages = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   
+  const handleViewAllMessages = () => {
+    navigate('/messages');
+  };
+  
   return (
     <div className="space-y-6">
       <h3 className="text-lg font-medium">{t('messages')}</h3>
@@ -16,9 +20,14 @@ const Messages = () => {
         <MessageCircle className="mx-auto h-12 w-12 text-gray-400" />
         <h3 className="mt-4 text-lg font-medium text-gray-900">{t('youHaveNoMessages')}</h3>
         <p className="mt-2 text-sm text-gray-500">{t('messagesWillAppearHere')}</p>
-        <Button className="mt-4" variant="outline" onClick={() => navigate('/')}>
-          {t('browseBicycles')}
-        </Button>
+        <div className="flex justify-center gap-4 mt-4">
+          <Button variant="outline" onClick={() => navigate('/')}>
+            {t('browseBicycles')}
+          </Button>
+          <Button onClick={handleViewAllMessages}>
+            {t('viewAllMessages')}
+          </Button>
+        </div>
       </div>
     </div>
   );
