@@ -144,7 +144,7 @@ const SearchPage = () => {
           </div>
           
           <div className="max-w-6xl mx-auto">
-            <SearchResults query={searchQuery} filters={filters} />
+            <SearchResults />
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import BicycleGrid from '@/components/bicycles/BicycleGrid';
 import { Button } from '@/components/ui/button';
@@ -63,7 +64,18 @@ const bicycles = [
   },
 ];
 
-const SearchResults = () => {
+// Define interface for the props
+interface SearchResultsProps {
+  query?: string;
+  filters?: {
+    priceRange: string;
+    type: string;
+    brand: string;
+    location: string;
+  };
+}
+
+const SearchResults: React.FC<SearchResultsProps> = () => {
   const { t } = useTranslation();
   const [priceRange, setPriceRange] = React.useState([0, 5000]);
   const [filterVisible, setFilterVisible] = React.useState(false);
