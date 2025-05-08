@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Avatar } from '@/components/ui/avatar';
 import MakeOfferPopover from '@/components/messages/MakeOfferPopover';
 import ChatHeader from '@/components/messages/ChatHeader';
+import { toast } from '@/hooks/use-toast';
 
 // Sample bicycle data - In a real app, this would come from an API
 const bicyclesData = {
@@ -138,7 +138,10 @@ const Messages = () => {
   const [showOfferPopover, setShowOfferPopover] = useState(false);
   const [showSidebar, setShowSidebar] = useState(true);
   
-  const messages = sampleMessages[bicycleId as keyof typeof sampleMessages] || [];
+  // Add local state to store messages so we can update them dynamically
+  const [localMessages, setLocalMessages] = useState<Record<string, any[]>>(sampleMessages);
+  
+  const messages = localMessages[bicycleId as keyof typeof localMessages] || [];
   const bicycle = bicyclesData[bicycleId as keyof typeof bicyclesData] || {
     title: 'Bicycle',
     price: 0,
@@ -149,9 +152,29 @@ const Messages = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (newMessage.trim()) {
-      // In a real app, this would send the message to the server
-      console.log('Sending message:', newMessage);
+      // Create a new message
+      const newMsg = {
+        id: messages.length + 1,
+        sender: 'buyer',
+        message: newMessage,
+        timestamp: new Date(),
+        isOffer: false
+      };
+      
+      // Update the messages for this conversation
+      setLocalMessages(prev => ({
+        ...prev,
+        [bicycleId]: [...(prev[bicycleId as keyof typeof prev] || []), newMsg]
+      }));
+      
+      // Clear the input
       setNewMessage('');
+      
+      // Show toast notification
+      toast({
+        title: t('messageSent'),
+        description: t('yourMessageHasBeenSent'),
+      });
     }
   };
 
@@ -160,12 +183,25 @@ const Messages = () => {
   };
   
   const handleMakeOffer = (amount: number) => {
-    // In a real app, this would send the offer to the server
-    console.log('Making offer:', amount);
-    setShowOfferPopover(false);
+    // Create a new message for the offer
+    const newOfferMsg = {
+      id: messages.length + 1,
+      sender: 'buyer',
+      message: `${t('offer')}: $${amount.toLocaleString()}`,
+      timestamp: new Date(),
+      isOffer: true,
+      offerAmount: amount,
+      status: 'sent'
+    };
     
-    // Then we would refresh the messages or add the new offer to the UI
-    // For now, we'll just close the popover
+    // Update the messages for this conversation
+    setLocalMessages(prev => ({
+      ...prev,
+      [bicycleId]: [...(prev[bicycleId as keyof typeof prev] || []), newOfferMsg]
+    }));
+    
+    // Close the offer popover
+    setShowOfferPopover(false);
   };
   
   const toggleSidebar = () => {
@@ -315,7 +351,7 @@ const Messages = () => {
                       <div className={`text-xs mt-2 ${
                         msg.sender === 'buyer' ? 'text-blue-100' : 'text-gray-500'
                       }`}>
-                        {format(msg.timestamp, 'HH:mm')}
+                        {format(new Date(msg.timestamp), 'HH:mm')}
                       </div>
                     </div>
                     {msg.sender === 'seller' && (

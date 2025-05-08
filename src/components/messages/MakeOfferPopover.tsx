@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { toast } from '@/hooks/use-toast';
 
 interface MakeOfferPopoverProps {
   originalPrice: number;
@@ -21,13 +22,27 @@ const MakeOfferPopover = ({ originalPrice, onCancel, onSubmit }: MakeOfferPopove
   const fivePercent = Math.floor(originalPrice * 0.95);
   
   const handleSelectAmount = (amount: number) => {
+    toast({
+      title: t('offerSent'),
+      description: `$${amount.toLocaleString()} ${t('offerHasBeenSent')}`,
+    });
     onSubmit(amount);
   };
   
   const handleSubmitCustom = () => {
     const amount = parseFloat(customAmount);
     if (!isNaN(amount) && amount > 0) {
+      toast({
+        title: t('offerSent'),
+        description: `$${amount.toLocaleString()} ${t('offerHasBeenSent')}`,
+      });
       onSubmit(amount);
+    } else {
+      toast({
+        title: t('invalidAmount'),
+        description: t('pleaseEnterValidAmount'),
+        variant: "destructive"
+      });
     }
   };
   

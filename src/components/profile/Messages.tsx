@@ -65,9 +65,11 @@ const Messages = () => {
         </Button>
       </div>
       
+      {/* Always show conversations if there are any */}
       {sampleConversations.length > 0 ? (
         <div className="space-y-2">
-          {sampleConversations.map((conversation) => (
+          {/* Show up to 3 conversations */}
+          {sampleConversations.slice(0, 3).map((conversation) => (
             <div 
               key={conversation.id}
               onClick={() => handleViewConversation(conversation.id)}
