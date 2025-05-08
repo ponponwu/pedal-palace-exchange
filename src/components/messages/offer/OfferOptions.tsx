@@ -9,9 +9,10 @@ interface OfferOptionsProps {
     isRecommended?: boolean;
   }[];
   onSelectAmount: (amount: number) => void;
+  isLoading?: boolean;
 }
 
-const OfferOptions = ({ options, onSelectAmount }: OfferOptionsProps) => {
+const OfferOptions = ({ options, onSelectAmount, isLoading = false }: OfferOptionsProps) => {
   return (
     <div className="grid grid-cols-3 gap-3 mb-4">
       {options.map((option, index) => (
@@ -21,6 +22,7 @@ const OfferOptions = ({ options, onSelectAmount }: OfferOptionsProps) => {
           percentageOff={option.percentageOff}
           isRecommended={option.isRecommended}
           onClick={onSelectAmount}
+          disabled={isLoading}
         />
       ))}
     </div>

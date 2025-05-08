@@ -6,13 +6,14 @@ interface OfferTileProps {
   percentageOff: number;
   isRecommended?: boolean;
   onClick: (amount: number) => void;
+  disabled?: boolean;
 }
 
-const OfferTile = ({ amount, percentageOff, isRecommended = false, onClick }: OfferTileProps) => {
+const OfferTile = ({ amount, percentageOff, isRecommended = false, onClick, disabled = false }: OfferTileProps) => {
   return (
     <div 
-      className="border rounded-lg p-3 text-center cursor-pointer hover:bg-gray-50 relative"
-      onClick={() => onClick(amount)}
+      className={`border rounded-lg p-3 text-center relative ${disabled ? 'opacity-70 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-50'}`}
+      onClick={() => !disabled && onClick(amount)}
     >
       {isRecommended && (
         <div className="absolute top-0 left-0 w-full text-xs text-blue-600 bg-blue-50 rounded-t-lg">
