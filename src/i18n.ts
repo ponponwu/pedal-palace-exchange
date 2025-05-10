@@ -1,3 +1,4 @@
+
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -58,7 +59,6 @@ const resources = {
       "frameSize": "Frame Size",
       "wheelSize": "Wheel Size",
       "yearsOfUse": "Years of Use",
-      "sellerInformation": "Seller Information",
       "contactSeller": "Contact Seller",
       "askQuestion": "Ask a question about this bicycle...",
       "sendMessage": "Send Message",
@@ -153,7 +153,6 @@ const resources = {
       "frameSize": "車架尺寸",
       "wheelSize": "輪胎尺寸",
       "yearsOfUse": "使用年限",
-      "sellerInformation": "賣家資訊",
       "contactSeller": "聯絡賣家",
       "askQuestion": "詢問關於這輛自行車的問題...",
       "sendMessage": "發送訊息",
