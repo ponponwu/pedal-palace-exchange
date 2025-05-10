@@ -52,10 +52,11 @@ const SearchResults: React.FC<SearchResultsProps> = () => {
       type: searchParams.get('type'),
       brand: searchParams.get('brand'),
       location: searchParams.get('location'),
-      priceRange: searchParams.get('price'),
+      price: searchParams.get('price'),
       categories: selectedFilters.categories,
       conditions: selectedFilters.conditions,
-      priceRange: [selectedFilters.priceMin, selectedFilters.priceMax]
+      priceMin: selectedFilters.priceMin,
+      priceMax: selectedFilters.priceMax
     });
 
     // Simulate API call delay
