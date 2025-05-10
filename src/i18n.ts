@@ -96,7 +96,25 @@ const resources = {
       "allTypes": "All Types",
       "allBrands": "All Brands",
       "allLocations": "All Locations",
-      "advancedSearchOptions": "Advanced Search Options"
+      "advancedSearchOptions": "Advanced Search Options",
+      
+      // Search Results
+      "searchResults": "Search Results",
+      "hideFilters": "Hide Filters",
+      "showFilters": "Show Filters",
+      "categories": "Categories",
+      "resetFilters": "Reset Filters",
+      "grid": "Grid",
+      "list": "List",
+      "resultsFound": "results found",
+      "noBicyclesFound": "No bicycles match your search criteria",
+      "loading": "Loading",
+      
+      // Hero Banner
+      "ride": "Ride",
+      "heroBannerDescription": "Buy and sell second-hand bicycles with our cycling enthusiast community. Find the perfect ride or give your bike a new home.",
+      "browseBikes": "Browse Bikes",
+      "sellYourBike": "Sell Your Bike"
     }
   },
   zh: {
@@ -190,7 +208,25 @@ const resources = {
       "allTypes": "所有類型",
       "allBrands": "所有品牌",
       "allLocations": "所有地點",
-      "advancedSearchOptions": "進階搜尋選項"
+      "advancedSearchOptions": "進階搜尋選項",
+      
+      // 搜尋結果
+      "searchResults": "搜尋結果",
+      "hideFilters": "隱藏篩選條件",
+      "showFilters": "顯示篩選條件",
+      "categories": "分類",
+      "resetFilters": "重置篩選條件",
+      "grid": "網格",
+      "list": "列表",
+      "resultsFound": "個結果",
+      "noBicyclesFound": "沒有符合您搜尋條件的自行車",
+      "loading": "載入中",
+      
+      // 首頁橫幅
+      "ride": "騎行",
+      "heroBannerDescription": "與我們的自行車愛好者社區一起買賣二手自行車。找到您心儀的自行車，或為您的自行車找到新家。",
+      "browseBikes": "瀏覽自行車",
+      "sellYourBike": "出售您的自行車"
     }
   }
 };
