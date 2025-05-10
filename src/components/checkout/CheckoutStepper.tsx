@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Check } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface CheckoutStepperProps {
   steps: string[];
@@ -8,6 +9,8 @@ interface CheckoutStepperProps {
 }
 
 const CheckoutStepper = ({ steps, activeStep }: CheckoutStepperProps) => {
+  const { t } = useTranslation();
+  
   return (
     <div className="flex w-full">
       {steps.map((step, index) => {
@@ -31,7 +34,7 @@ const CheckoutStepper = ({ steps, activeStep }: CheckoutStepperProps) => {
               <span className={`mt-2 text-xs font-medium ${
                 isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-gray-500'
               }`}>
-                {step}
+                {t(step)}
               </span>
             </div>
           </div>
