@@ -120,7 +120,6 @@ export const zh = {
     "allMessages": "所有訊息",
     "approve": "審核通過",
     "reject": "拒絕",
-    "viewDetails": "查看詳情",
     "noPendingBicycles": "沒有待審核的自行車",
     "bicycleReview": "自行車審核",
     "adminLogin": "管理員登入",
@@ -133,6 +132,25 @@ export const zh = {
     "adminActions": "管理員操作",
     "reviewAndManage": "審核和管理自行車列表",
     "allConversations": "所有對話",
-    "conversationsBetween": "{user1} 和 {user2} 之間的對話"
+    "conversationsBetween": "{user1} 和 {user2} 之間的對話",
+    
+    // 新增翻譯
+    "price": "價格",
+    "title": "標題",
+    "bicycles": "自行車",
+    "back": "返回",
+    "manageBicycles": "管理自行車",
+    "viewMessages": "查看訊息",
+    "viewAndManageUserMessages": "查看和管理用戶訊息",
+    "users": "用戶",
+    "totalUsers": "總用戶數",
+    "pleaseEnterEmailAndPassword": "請輸入您的電子郵件和密碼",
+    "error": "錯誤",
+    "accessDenied": "拒絕訪問",
+    "youDoNotHaveAdminAccess": "您沒有管理員訪問權限",
+    "email": "電子郵件",
+    "password": "密碼",
+    "defaultAdminCredentials": "預設管理員憑證",
+    "no": "沒有"
   }
 };

@@ -37,7 +37,18 @@ const BicycleDetails: React.FC = () => {
 
       if (error) throw error;
       
-      setBicycle(data as BicycleWithOwner);
+      // Make sure we have the right structure for the owner field
+      const bicycleData = data as any;
+      const formattedBicycle: BicycleWithOwner = {
+        ...bicycleData,
+        owner: bicycleData.owner && !bicycleData.owner.error ? {
+          id: bicycleData.owner.id || '',
+          full_name: bicycleData.owner.full_name || '',
+          avatar_url: bicycleData.owner.avatar_url
+        } : undefined
+      };
+      
+      setBicycle(formattedBicycle);
     } catch (error) {
       console.error('Error fetching bicycle details:', error);
       toast({

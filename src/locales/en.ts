@@ -120,7 +120,6 @@ export const en = {
     "allMessages": "All Messages",
     "approve": "Approve",
     "reject": "Reject",
-    "viewDetails": "View Details",
     "noPendingBicycles": "No bicycles pending approval",
     "bicycleReview": "Bicycle Review",
     "adminLogin": "Admin Login",
@@ -133,6 +132,25 @@ export const en = {
     "adminActions": "Admin Actions",
     "reviewAndManage": "Review and manage bicycle listings",
     "allConversations": "All Conversations",
-    "conversationsBetween": "Conversations between {user1} and {user2}"
+    "conversationsBetween": "Conversations between {user1} and {user2}",
+    
+    // Additional translations
+    "price": "Price",
+    "title": "Title", 
+    "bicycles": "Bicycles",
+    "back": "Back",
+    "manageBicycles": "Manage Bicycles",
+    "viewMessages": "View Messages",
+    "viewAndManageUserMessages": "View and manage user messages",
+    "users": "Users",
+    "totalUsers": "Total Users",
+    "pleaseEnterEmailAndPassword": "Please enter your email and password",
+    "error": "Error",
+    "accessDenied": "Access Denied",
+    "youDoNotHaveAdminAccess": "You do not have admin access",
+    "email": "Email",
+    "password": "Password",
+    "defaultAdminCredentials": "Default admin credentials",
+    "no": "No"
   }
 };

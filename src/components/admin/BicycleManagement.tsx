@@ -28,13 +28,13 @@ const BicycleManagement: React.FC = () => {
   const navigate = useNavigate();
   const [bicycles, setBicycles] = useState<BicycleWithOwner[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('pending');
+  const [activeTab, setActiveTab] = useState<'pending' | 'approved' | 'rejected'>('pending');
 
   useEffect(() => {
     fetchBicycles(activeTab);
   }, [activeTab]);
 
-  const fetchBicycles = async (status: string) => {
+  const fetchBicycles = async (status: 'pending' | 'approved' | 'rejected') => {
     setLoading(true);
     try {
       const { data, error } = await supabase
@@ -47,7 +47,17 @@ const BicycleManagement: React.FC = () => {
 
       if (error) throw error;
       
-      setBicycles(data as BicycleWithOwner[] || []);
+      // Format the data to match the BicycleWithOwner type
+      const formattedBicycles: BicycleWithOwner[] = (data || []).map((item: any) => ({
+        ...item,
+        owner: item.owner && !item.owner.error ? {
+          id: item.owner.id || '',
+          full_name: item.owner.full_name || '',
+          avatar_url: item.owner.avatar_url
+        } : undefined
+      }));
+      
+      setBicycles(formattedBicycles);
     } catch (error) {
       console.error('Error fetching bicycles:', error);
       toast({
@@ -132,7 +142,7 @@ const BicycleManagement: React.FC = () => {
         <p className="text-gray-500">{t('reviewAndManage')}</p>
       </div>
       
-      <Tabs defaultValue={activeTab} onValueChange={setActiveTab}>
+      <Tabs defaultValue={activeTab} onValueChange={(value) => setActiveTab(value as 'pending' | 'approved' | 'rejected')}>
         <TabsList className="mb-6">
           <TabsTrigger value="pending">{t('pendingApproval')}</TabsTrigger>
           <TabsTrigger value="approved">{t('approved')}</TabsTrigger>
