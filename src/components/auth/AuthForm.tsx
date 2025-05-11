@@ -4,12 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from '@/hooks/use-toast';
+import { useTranslation } from 'react-i18next';
 
 type AuthFormProps = {
   type: 'login' | 'register';
 };
 
 const AuthForm = ({ type }: AuthFormProps) => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -37,6 +39,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
       }
     } catch (error) {
       console.error('Authentication error:', error);
+      // Toast is already handled in the useAuth hook
     } finally {
       setIsLoading(false);
     }
@@ -166,7 +169,7 @@ const AuthForm = ({ type }: AuthFormProps) => {
           className="w-full bg-marketplace-blue hover:bg-blue-600"
           disabled={isLoading}
         >
-          {isLoading ? 'Loading...' : buttonText}
+          {isLoading ? t('loading') : buttonText}
         </Button>
       </form>
       

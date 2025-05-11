@@ -151,6 +151,10 @@ export const en = {
     "email": "Email",
     "password": "Password",
     "defaultAdminCredentials": "Default admin credentials",
-    "no": "No"
+    "no": "No",
+    
+    // New translations
+    "adminLoginSuccess": "Successfully logged in as admin",
+    "invalidLoginCredentials": "Invalid login credentials. Please try again."
   }
 };

@@ -14,7 +14,7 @@ import { toast } from '@/hooks/use-toast';
 const AdminLoginPage: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { signIn, isAdmin, user } = useAuth();
+  const { signIn, isAdmin, user, checkAdminStatus } = useAuth();
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,10 +44,16 @@ const AdminLoginPage: React.FC = () => {
     try {
       await signIn(email, password);
       
-      // Check admin status after login
-      const adminCheckResult = await checkAdminAndNavigate();
+      // After successful login, check admin status
+      const isAdminUser = await checkAdminStatus();
       
-      if (!adminCheckResult) {
+      if (isAdminUser) {
+        toast({
+          title: t('login'),
+          description: t('adminLoginSuccess'),
+        });
+        navigate('/admin');
+      } else {
         toast({
           variant: 'destructive',
           title: t('accessDenied'),
@@ -56,25 +62,13 @@ const AdminLoginPage: React.FC = () => {
       }
     } catch (error) {
       console.error('Login error:', error);
+      toast({
+        variant: 'destructive',
+        title: t('error'),
+        description: t('invalidLoginCredentials'),
+      });
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const checkAdminAndNavigate = async () => {
-    try {
-      // We need to import checkAdminStatus from useAuth context
-      const { checkAdminStatus } = useAuth();
-      const isAdminUser = await checkAdminStatus();
-      
-      if (isAdminUser) {
-        navigate('/admin');
-        return true;
-      }
-      return false;
-    } catch (error) {
-      console.error('Error checking admin status:', error);
-      return false;
     }
   };
 

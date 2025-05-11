@@ -151,6 +151,10 @@ export const zh = {
     "email": "電子郵件",
     "password": "密碼",
     "defaultAdminCredentials": "預設管理員憑證",
-    "no": "沒有"
+    "no": "沒有",
+    
+    // 新翻譯
+    "adminLoginSuccess": "成功登入為管理員",
+    "invalidLoginCredentials": "登入憑證無效，請重新嘗試。"
   }
 };
