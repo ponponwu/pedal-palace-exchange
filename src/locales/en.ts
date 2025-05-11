@@ -108,6 +108,31 @@ export const en = {
     "ride": "Ride",
     "heroBannerDescription": "Buy and sell second-hand bicycles with our cycling enthusiast community. Find the perfect ride or give your bike a new home.",
     "browseBikes": "Browse Bikes",
-    "sellYourBike": "Sell Your Bike"
+    "sellYourBike": "Sell Your Bike",
+    
+    // Admin Panel
+    "adminPanel": "Admin Panel",
+    "pendingApproval": "Pending Approval",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "bicycleManagement": "Bicycle Management",
+    "userManagement": "User Management",
+    "allMessages": "All Messages",
+    "approve": "Approve",
+    "reject": "Reject",
+    "viewDetails": "View Details",
+    "noPendingBicycles": "No bicycles pending approval",
+    "bicycleReview": "Bicycle Review",
+    "adminLogin": "Admin Login",
+    "adminDashboard": "Admin Dashboard",
+    "adminAccess": "Admin Access",
+    "pendingReview": "Pending Review",
+    "status": "Status",
+    "actions": "Actions",
+    "seller": "Seller",
+    "adminActions": "Admin Actions",
+    "reviewAndManage": "Review and manage bicycle listings",
+    "allConversations": "All Conversations",
+    "conversationsBetween": "Conversations between {user1} and {user2}"
   }
 };

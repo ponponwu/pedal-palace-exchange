@@ -9,12 +9,108 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      bicycles: {
+        Row: {
+          brand: string | null
+          condition: string | null
+          created_at: string
+          description: string | null
+          frame_size: string | null
+          id: string
+          images: Json | null
+          location: string | null
+          model: string | null
+          price: number
+          status: Database["public"]["Enums"]["bicycle_status"]
+          title: string
+          updated_at: string
+          user_id: string
+          wheel_size: string | null
+          year: number | null
+        }
+        Insert: {
+          brand?: string | null
+          condition?: string | null
+          created_at?: string
+          description?: string | null
+          frame_size?: string | null
+          id?: string
+          images?: Json | null
+          location?: string | null
+          model?: string | null
+          price: number
+          status?: Database["public"]["Enums"]["bicycle_status"]
+          title: string
+          updated_at?: string
+          user_id: string
+          wheel_size?: string | null
+          year?: number | null
+        }
+        Update: {
+          brand?: string | null
+          condition?: string | null
+          created_at?: string
+          description?: string | null
+          frame_size?: string | null
+          id?: string
+          images?: Json | null
+          location?: string | null
+          model?: string | null
+          price?: number
+          status?: Database["public"]["Enums"]["bicycle_status"]
+          title?: string
+          updated_at?: string
+          user_id?: string
+          wheel_size?: string | null
+          year?: number | null
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          bicycle_id: string
+          created_at: string
+          id: string
+          message: string
+          read: boolean
+          receiver_id: string
+          sender_id: string
+        }
+        Insert: {
+          bicycle_id: string
+          created_at?: string
+          id?: string
+          message: string
+          read?: boolean
+          receiver_id: string
+          sender_id: string
+        }
+        Update: {
+          bicycle_id?: string
+          created_at?: string
+          id?: string
+          message?: string
+          read?: boolean
+          receiver_id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_bicycle_id_fkey"
+            columns: ["bicycle_id"]
+            isOneToOne: false
+            referencedRelation: "bicycles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
           created_at: string
           full_name: string | null
           id: string
+          role: Database["public"]["Enums"]["user_role"]
           updated_at: string
         }
         Insert: {
@@ -22,6 +118,7 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id: string
+          role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string
         }
         Update: {
@@ -29,6 +126,7 @@ export type Database = {
           created_at?: string
           full_name?: string | null
           id?: string
+          role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string
         }
         Relationships: []
@@ -38,10 +136,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_admin: {
+        Args: { user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      bicycle_status: "pending" | "approved" | "rejected"
+      user_role: "user" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -156,6 +258,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      bicycle_status: ["pending", "approved", "rejected"],
+      user_role: ["user", "admin"],
+    },
   },
 } as const

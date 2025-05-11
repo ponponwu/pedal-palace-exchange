@@ -9,11 +9,13 @@ type AuthContextType = {
   user: User | null;
   session: Session | null;
   isLoading: boolean;
+  isAdmin: boolean;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, name: string) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signInWithFacebook: () => Promise<void>;
   signOut: () => Promise<void>;
+  checkAdminStatus: () => Promise<boolean>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,7 +24,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
+
+  // Check if the current user is an admin
+  const checkAdminStatus = async (): Promise<boolean> => {
+    if (!user) return false;
+    
+    try {
+      const { data, error } = await supabase
+        .rpc('is_admin', { user_id: user.id });
+        
+      if (error) throw error;
+      
+      setIsAdmin(!!data);
+      return !!data;
+    } catch (error) {
+      console.error('Error checking admin status:', error);
+      return false;
+    }
+  };
 
   useEffect(() => {
     // Set up auth state listener FIRST
@@ -34,9 +55,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (event === 'SIGNED_IN') {
           // Defer any additional actions after sign-in to prevent deadlock
           setTimeout(() => {
-            navigate('/');
+            checkAdminStatus().then(() => {
+              navigate('/');
+            });
           }, 0);
         } else if (event === 'SIGNED_OUT') {
+          setIsAdmin(false);
           navigate('/login');
         }
       }
@@ -46,7 +70,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
-      setIsLoading(false);
+      
+      if (session?.user) {
+        checkAdminStatus().then(() => {
+          setIsLoading(false);
+        });
+      } else {
+        setIsLoading(false);
+      }
     });
 
     return () => {
@@ -69,6 +100,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         title: "Welcome back!",
         description: "You have successfully signed in.",
       });
+      
+      await checkAdminStatus();
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -159,6 +192,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (error) {
         throw error;
       }
+      setIsAdmin(false);
       toast({
         title: "Signed out",
         description: "You have been signed out successfully.",
@@ -176,11 +210,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     user,
     session,
     isLoading,
+    isAdmin,
     signIn,
     signUp,
     signInWithGoogle,
     signInWithFacebook,
     signOut,
+    checkAdminStatus,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

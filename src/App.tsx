@@ -19,6 +19,12 @@ import Messages from "./pages/Messages";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 
+// Admin Pages
+import AdminLoginPage from "./pages/admin/AdminLoginPage";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
+import AdminBicyclesPage from "./pages/admin/AdminBicyclesPage";
+import AdminBicyclePage from "./pages/admin/AdminBicyclePage";
+
 // Create a client
 const queryClient = new QueryClient();
 
@@ -42,6 +48,13 @@ function App() {
               <Route path="/messages" element={<Messages />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-success" element={<OrderSuccess />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLoginPage />} />
+              <Route path="/admin" element={<AdminDashboardPage />} />
+              <Route path="/admin/bicycles" element={<AdminBicyclesPage />} />
+              <Route path="/admin/bicycles/:id" element={<AdminBicyclePage />} />
+              
               <Route path="*" element={<NotFound />} />
             </Routes>
           </TooltipProvider>

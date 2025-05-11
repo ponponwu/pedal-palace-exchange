@@ -9,13 +9,14 @@ import {
   Bookmark, 
   Menu, 
   X,
-  LogOut
+  LogOut,
+  Shield
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user, signOut, isAdmin } = useAuth();
 
   const handleSignOut = async () => {
     await signOut();
@@ -56,6 +57,11 @@ const Navbar = () => {
           <Link to="/messages" className="px-3 py-2 text-gray-700 hover:text-marketplace-blue transition-colors">
             消息
           </Link>
+          {isAdmin && (
+            <Link to="/admin" className="px-3 py-2 text-gray-700 hover:text-marketplace-blue transition-colors">
+              管理員
+            </Link>
+          )}
         </nav>
 
         {/* Desktop Actions */}
@@ -134,6 +140,17 @@ const Navbar = () => {
                 <MessageCircle className="w-5 h-5 mr-3 text-gray-500" />
                 <span className="text-gray-700">消息中心</span>
               </Link>
+              
+              {isAdmin && (
+                <Link 
+                  to="/admin" 
+                  className="flex items-center p-3 rounded-lg hover:bg-gray-100"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Shield className="w-5 h-5 mr-3 text-gray-500" />
+                  <span className="text-gray-700">管理員面板</span>
+                </Link>
+              )}
               
               {user ? (
                 <>

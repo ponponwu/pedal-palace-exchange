@@ -108,6 +108,31 @@ export const zh = {
     "ride": "騎行",
     "heroBannerDescription": "與我們的自行車愛好者社區一起買賣二手自行車。找到您心儀的自行車，或為您的自行車找到新家。",
     "browseBikes": "瀏覽自行車",
-    "sellYourBike": "出售您的自行車"
+    "sellYourBike": "出售您的自行車",
+    
+    // 管理員面板
+    "adminPanel": "管理員面板",
+    "pendingApproval": "待審核",
+    "approved": "已審核",
+    "rejected": "已拒絕",
+    "bicycleManagement": "自行車管理",
+    "userManagement": "用戶管理",
+    "allMessages": "所有訊息",
+    "approve": "審核通過",
+    "reject": "拒絕",
+    "viewDetails": "查看詳情",
+    "noPendingBicycles": "沒有待審核的自行車",
+    "bicycleReview": "自行車審核",
+    "adminLogin": "管理員登入",
+    "adminDashboard": "管理員儀表板",
+    "adminAccess": "管理員權限",
+    "pendingReview": "待審核",
+    "status": "狀態",
+    "actions": "操作",
+    "seller": "賣家",
+    "adminActions": "管理員操作",
+    "reviewAndManage": "審核和管理自行車列表",
+    "allConversations": "所有對話",
+    "conversationsBetween": "{user1} 和 {user2} 之間的對話"
   }
 };
