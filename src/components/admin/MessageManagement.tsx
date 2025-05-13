@@ -24,9 +24,9 @@ interface Message {
   created_at: string;
   read: boolean;
   bicycle_id: string;
-  sender?: { full_name: string };
-  receiver?: { full_name: string };
-  bicycle?: { title: string };
+  sender?: { full_name?: string } | null;
+  receiver?: { full_name?: string } | null;
+  bicycle?: { title?: string } | null;
 }
 
 const MessageManagement: React.FC = () => {
@@ -56,7 +56,15 @@ const MessageManagement: React.FC = () => {
         
       if (error) throw error;
       
-      setMessages(data || []);
+      // Transform the data to ensure sender and receiver have the expected structure
+      const transformedData: Message[] = (data || []).map(msg => ({
+        ...msg,
+        sender: msg.sender || { full_name: t('unknownUser') },
+        receiver: msg.receiver || { full_name: t('unknownUser') },
+        bicycle: msg.bicycle || { title: t('unknownBicycle') }
+      }));
+      
+      setMessages(transformedData);
     } catch (error) {
       console.error('Error fetching messages:', error);
       toast({
@@ -87,7 +95,15 @@ const MessageManagement: React.FC = () => {
         
       if (error) throw error;
       
-      setChatMessages(data || []);
+      // Transform the data to ensure sender and receiver have the expected structure
+      const transformedData: Message[] = (data || []).map(msg => ({
+        ...msg,
+        sender: msg.sender || { full_name: t('unknownUser') },
+        receiver: msg.receiver || { full_name: t('unknownUser') },
+        bicycle: msg.bicycle || { title: t('unknownBicycle') }
+      }));
+      
+      setChatMessages(transformedData);
       setSelectedChat(bicycleId + senderId + receiverId);
     } catch (error) {
       console.error('Error fetching conversation:', error);
@@ -150,7 +166,7 @@ const MessageManagement: React.FC = () => {
                       >
                         <div className="flex justify-between">
                           <p className="font-medium truncate">
-                            {msg.sender?.full_name} → {msg.receiver?.full_name}
+                            {msg.sender?.full_name || t('unknownUser')} → {msg.receiver?.full_name || t('unknownUser')}
                           </p>
                           <span className="text-xs text-gray-500">{formatDate(msg.created_at).split(',')[0]}</span>
                         </div>
@@ -176,7 +192,7 @@ const MessageManagement: React.FC = () => {
                           {chatMessages.map((msg) => (
                             <div key={msg.id} className="flex flex-col">
                               <div className="flex items-center mb-1">
-                                <span className="font-medium">{msg.sender?.full_name}</span>
+                                <span className="font-medium">{msg.sender?.full_name || t('unknownUser')}</span>
                                 <span className="text-xs text-gray-500 ml-2">
                                   {formatDate(msg.created_at)}
                                 </span>
