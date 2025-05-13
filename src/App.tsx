@@ -27,6 +27,7 @@ import AdminBicyclePage from "./pages/admin/AdminBicyclePage";
 import AdminUsersPage from "./pages/admin/AdminUsersPage";
 import AdminMessagesPage from "./pages/admin/AdminMessagesPage";
 import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
+import AdminManagePage from "./pages/admin/AdminManagePage";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -60,6 +61,7 @@ function App() {
               <Route path="/admin/users" element={<AdminUsersPage />} />
               <Route path="/admin/messages" element={<AdminMessagesPage />} />
               <Route path="/admin/settings" element={<AdminSettingsPage />} />
+              <Route path="/admin/manage" element={<AdminManagePage />} />
               
               <Route path="*" element={<NotFound />} />
             </Routes>
