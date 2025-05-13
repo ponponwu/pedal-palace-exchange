@@ -16,6 +16,25 @@ import { Eye } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
+// Type to handle possible Supabase error responses
+type SelectQueryError<T extends string> = {
+  error: true;
+} & String;
+
+// Helper function to safely transform data from Supabase
+interface RawMessage {
+  id: string;
+  message: string;
+  sender_id: string;
+  receiver_id: string;
+  created_at: string;
+  read: boolean;
+  bicycle_id: string;
+  sender: { full_name?: string } | SelectQueryError<string> | null;
+  receiver: { full_name?: string } | SelectQueryError<string> | null;
+  bicycle: { title?: string } | null;
+}
+
 interface Message {
   id: string;
   message: string;
@@ -28,6 +47,25 @@ interface Message {
   receiver?: { full_name?: string } | null;
   bicycle?: { title?: string } | null;
 }
+
+// Helper function to transform the data safely
+const transformMessageData = (msg: RawMessage): Message => {
+  const transformedMsg: Message = {
+    ...msg,
+    // Check if sender is an error object (has 'error' property) or is null/undefined
+    sender: typeof msg.sender === 'object' && msg.sender !== null && !('error' in msg.sender) 
+      ? msg.sender 
+      : { full_name: undefined },
+    // Check if receiver is an error object (has 'error' property) or is null/undefined
+    receiver: typeof msg.receiver === 'object' && msg.receiver !== null && !('error' in msg.receiver) 
+      ? msg.receiver 
+      : { full_name: undefined },
+    // Check if bicycle exists
+    bicycle: msg.bicycle || { title: undefined }
+  };
+  
+  return transformedMsg;
+};
 
 const MessageManagement: React.FC = () => {
   const { t } = useTranslation();
@@ -56,13 +94,16 @@ const MessageManagement: React.FC = () => {
         
       if (error) throw error;
       
-      // Transform the data to ensure sender and receiver have the expected structure
-      const transformedData: Message[] = (data || []).map(msg => ({
-        ...msg,
-        sender: msg.sender || { full_name: t('unknownUser') },
-        receiver: msg.receiver || { full_name: t('unknownUser') },
-        bicycle: msg.bicycle || { title: t('unknownBicycle') }
-      }));
+      // Transform the raw data to ensure proper typing
+      const transformedData: Message[] = (data || []).map(msg => {
+        const transformedMsg = transformMessageData(msg as RawMessage);
+        return {
+          ...transformedMsg,
+          sender: transformedMsg.sender || { full_name: t('unknownUser') },
+          receiver: transformedMsg.receiver || { full_name: t('unknownUser') },
+          bicycle: transformedMsg.bicycle || { title: t('unknownBicycle') }
+        };
+      });
       
       setMessages(transformedData);
     } catch (error) {
@@ -95,13 +136,16 @@ const MessageManagement: React.FC = () => {
         
       if (error) throw error;
       
-      // Transform the data to ensure sender and receiver have the expected structure
-      const transformedData: Message[] = (data || []).map(msg => ({
-        ...msg,
-        sender: msg.sender || { full_name: t('unknownUser') },
-        receiver: msg.receiver || { full_name: t('unknownUser') },
-        bicycle: msg.bicycle || { title: t('unknownBicycle') }
-      }));
+      // Transform the raw data to ensure proper typing
+      const transformedData: Message[] = (data || []).map(msg => {
+        const transformedMsg = transformMessageData(msg as RawMessage);
+        return {
+          ...transformedMsg,
+          sender: transformedMsg.sender || { full_name: t('unknownUser') },
+          receiver: transformedMsg.receiver || { full_name: t('unknownUser') },
+          bicycle: transformedMsg.bicycle || { title: t('unknownBicycle') }
+        };
+      });
       
       setChatMessages(transformedData);
       setSelectedChat(bicycleId + senderId + receiverId);
