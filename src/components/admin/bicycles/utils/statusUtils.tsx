@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Badge } from '@/components/ui/badge';
 
@@ -8,15 +9,17 @@ export const useStatusBadge = () => {
   const renderStatusBadge = (status: string) => {
     switch (status) {
       case 'pending':
-        return <Badge variant="outline" className="bg-yellow-100 text-yellow-800">{t('pendingReview')}</Badge>;
+        return <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">{t('pendingReview')}</Badge>;
       case 'approved':
-        return <Badge variant="outline" className="bg-green-100 text-green-800">{t('approved')}</Badge>;
+        return <Badge className="bg-green-100 text-green-800 border-green-200">{t('approved')}</Badge>;
       case 'rejected':
-        return <Badge variant="outline" className="bg-red-100 text-red-800">{t('rejected')}</Badge>;
+        return <Badge className="bg-red-100 text-red-800 border-red-200">{t('rejected')}</Badge>;
       default:
         return null;
     }
   };
 
-  return { renderStatusBadge };
+  return {
+    renderStatusBadge
+  };
 };
