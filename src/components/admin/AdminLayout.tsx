@@ -1,32 +1,14 @@
 
 import React from 'react';
-import { Navigate } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
 import AdminNavbar from './AdminNavbar';
-import { useAuth } from '@/hooks/useAuth';
 
 interface AdminLayoutProps {
   children: React.ReactNode;
 }
 
 const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
-  const { user, isAdmin, isLoading } = useAuth();
-  
-  // Show loading state
-  if (isLoading) {
-    return (
-      <MainLayout>
-        <div className="flex items-center justify-center min-h-[70vh]">
-          <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
-        </div>
-      </MainLayout>
-    );
-  }
-  
-  // Redirect if not admin
-  if (!user || !isAdmin) {
-    return <Navigate to="/admin/login" replace />;
-  }
+  // No authentication check anymore - direct access to admin functionality
   
   return (
     <MainLayout>

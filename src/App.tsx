@@ -24,6 +24,9 @@ import AdminLoginPage from "./pages/admin/AdminLoginPage";
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import AdminBicyclesPage from "./pages/admin/AdminBicyclesPage";
 import AdminBicyclePage from "./pages/admin/AdminBicyclePage";
+import AdminUsersPage from "./pages/admin/AdminUsersPage";
+import AdminMessagesPage from "./pages/admin/AdminMessagesPage";
+import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
 
 // Create a client
 const queryClient = new QueryClient();
@@ -54,6 +57,9 @@ function App() {
               <Route path="/admin" element={<AdminDashboardPage />} />
               <Route path="/admin/bicycles" element={<AdminBicyclesPage />} />
               <Route path="/admin/bicycles/:id" element={<AdminBicyclePage />} />
+              <Route path="/admin/users" element={<AdminUsersPage />} />
+              <Route path="/admin/messages" element={<AdminMessagesPage />} />
+              <Route path="/admin/settings" element={<AdminSettingsPage />} />
               
               <Route path="*" element={<NotFound />} />
             </Routes>
