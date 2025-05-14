@@ -155,6 +155,27 @@ export const zh = {
     
     // 新翻譯
     "adminLoginSuccess": "成功登入為管理員",
-    "invalidLoginCredentials": "登入憑證無效，請重新嘗試。"
+    "invalidLoginCredentials": "登入憑證無效，請重新嘗試。",
+    
+    // 管理控制台新增翻譯
+    "adminManagement": "管理員控制台",
+    "manageYourApplication": "管理您的應用程式",
+    "messageManagement": "消息管理",
+    "reportedContent": "舉報內容",
+    "systemSettings": "系統設置",
+    "comingSoon": "即將上線",
+    "userManagementDescription": "管理用戶帳戶和權限設置",
+    "reportedContentDescription": "審核用戶舉報的內容",
+    "systemSettingsDescription": "配置系統設置和偏好",
+    "conversations": "對話",
+    "conversation": "對話",
+    "unreadMessages": "未讀消息",
+    "unreadMessagesFeatureComingSoon": "未讀消息功能即將上線",
+    "selectConversationToView": "選擇一個對話來查看",
+    "noMessagesInConversation": "此對話中沒有消息",
+    "unknownUser": "未知用戶",
+    "unknownBicycle": "未知自行車",
+    "failedToFetchMessages": "獲取消息失敗",
+    "failedToFetchConversation": "獲取對話失敗"
   }
 };

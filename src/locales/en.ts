@@ -155,6 +155,27 @@ export const en = {
     
     // New translations
     "adminLoginSuccess": "Successfully logged in as admin",
-    "invalidLoginCredentials": "Invalid login credentials. Please try again."
+    "invalidLoginCredentials": "Invalid login credentials. Please try again.",
+    
+    // Admin management new translations
+    "adminManagement": "Admin Management",
+    "manageYourApplication": "Manage your application",
+    "messageManagement": "Message Management",
+    "reportedContent": "Reported Content",
+    "systemSettings": "System Settings",
+    "comingSoon": "Coming Soon",
+    "userManagementDescription": "Manage user accounts and permission settings",
+    "reportedContentDescription": "Review content reported by users",
+    "systemSettingsDescription": "Configure system settings and preferences",
+    "conversations": "Conversations",
+    "conversation": "Conversation",
+    "unreadMessages": "Unread Messages",
+    "unreadMessagesFeatureComingSoon": "Unread messages feature coming soon",
+    "selectConversationToView": "Select a conversation to view",
+    "noMessagesInConversation": "No messages in this conversation",
+    "unknownUser": "Unknown User",
+    "unknownBicycle": "Unknown Bicycle",
+    "failedToFetchMessages": "Failed to fetch messages",
+    "failedToFetchConversation": "Failed to fetch conversation"
   }
 };
