@@ -18,7 +18,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { MessageCircle, Eye } from 'lucide-react';
+import { MessageCircle, Eye, Ban } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -31,6 +31,8 @@ interface Profile {
   updated_at: string;
   bicycles_count: number;
   messages_count: number;
+  is_blacklisted: boolean;
+  phone_verified: boolean;
 }
 
 const UserManagement: React.FC = () => {
@@ -72,7 +74,9 @@ const UserManagement: React.FC = () => {
             return {
               ...profile,
               bicycles_count: bicyclesCount || 0,
-              messages_count: messagesCount || 0
+              messages_count: messagesCount || 0,
+              is_blacklisted: profile.is_blacklisted || false,
+              phone_verified: profile.phone_verified || false
             };
           })
         );
@@ -93,6 +97,36 @@ const UserManagement: React.FC = () => {
   
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString();
+  };
+
+  const toggleBlacklist = async (userId: string, currentStatus: boolean) => {
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ is_blacklisted: !currentStatus })
+        .eq('id', userId);
+      
+      if (error) throw error;
+      
+      // Update the local state
+      setUsers(users.map(user => 
+        user.id === userId 
+          ? { ...user, is_blacklisted: !currentStatus } 
+          : user
+      ));
+      
+      toast({
+        title: !currentStatus ? t('userBlacklisted') : t('userUnblacklisted'),
+        description: !currentStatus ? t('userHasBeenBlacklisted') : t('userHasBeenUnblacklisted'),
+      });
+    } catch (error) {
+      console.error('Error updating blacklist status:', error);
+      toast({
+        variant: 'destructive',
+        title: t('error'),
+        description: t('failedToUpdateBlacklistStatus'),
+      });
+    }
   };
   
   return (
@@ -120,6 +154,7 @@ const UserManagement: React.FC = () => {
                   <TableHead>{t('joinDate')}</TableHead>
                   <TableHead>{t('bicycles')}</TableHead>
                   <TableHead>{t('messages')}</TableHead>
+                  <TableHead>{t('status')}</TableHead>
                   <TableHead>{t('actions')}</TableHead>
                 </TableRow>
               </TableHeader>
@@ -137,7 +172,14 @@ const UserManagement: React.FC = () => {
                             </AvatarFallback>
                           )}
                         </Avatar>
-                        <span>{user.full_name || t('unnamed')}</span>
+                        <div>
+                          <span>{user.full_name || t('unnamed')}</span>
+                          {user.phone_verified && (
+                            <Badge variant="outline" className="ml-2 bg-green-50 text-green-700 border-green-200">
+                              {t('phoneVerified')}
+                            </Badge>
+                          )}
+                        </div>
                       </div>
                     </TableCell>
                     <TableCell>
@@ -154,6 +196,17 @@ const UserManagement: React.FC = () => {
                     <TableCell>{formatDate(user.created_at)}</TableCell>
                     <TableCell>{user.bicycles_count}</TableCell>
                     <TableCell>{user.messages_count}</TableCell>
+                    <TableCell>
+                      {user.is_blacklisted ? (
+                        <Badge variant="destructive">
+                          {t('blacklisted')}
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+                          {t('active')}
+                        </Badge>
+                      )}
+                    </TableCell>
                     <TableCell>
                       <div className="flex items-center space-x-2">
                         <Button 
@@ -179,6 +232,15 @@ const UserManagement: React.FC = () => {
                           <MessageCircle className="h-4 w-4 mr-1" />
                           {t('messages')}
                         </Button>
+
+                        <Button 
+                          variant={user.is_blacklisted ? "outline" : "destructive"} 
+                          size="sm"
+                          onClick={() => toggleBlacklist(user.id, user.is_blacklisted)}
+                        >
+                          <Ban className="h-4 w-4 mr-1" />
+                          {user.is_blacklisted ? t('unblacklist') : t('blacklist')}
+                        </Button>
                       </div>
                     </TableCell>
                   </TableRow>
@@ -186,7 +248,7 @@ const UserManagement: React.FC = () => {
                 
                 {users.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={6} className="text-center py-4">
+                    <TableCell colSpan={7} className="text-center py-4">
                       {t('noUsers')}
                     </TableCell>
                   </TableRow>
