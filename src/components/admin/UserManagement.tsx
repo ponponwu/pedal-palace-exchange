@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { 
@@ -29,10 +28,10 @@ interface Profile {
   role: 'admin' | 'user';
   created_at: string;
   updated_at: string;
+  is_blacklisted?: boolean;
+  phone_verified?: boolean;
   bicycles_count: number;
   messages_count: number;
-  is_blacklisted: boolean;
-  phone_verified: boolean;
 }
 
 const UserManagement: React.FC = () => {
@@ -75,8 +74,6 @@ const UserManagement: React.FC = () => {
               ...profile,
               bicycles_count: bicyclesCount || 0,
               messages_count: messagesCount || 0,
-              is_blacklisted: profile.is_blacklisted || false,
-              phone_verified: profile.phone_verified || false
             };
           })
         );
@@ -236,7 +233,7 @@ const UserManagement: React.FC = () => {
                         <Button 
                           variant={user.is_blacklisted ? "outline" : "destructive"} 
                           size="sm"
-                          onClick={() => toggleBlacklist(user.id, user.is_blacklisted)}
+                          onClick={() => toggleBlacklist(user.id, user.is_blacklisted || false)}
                         >
                           <Ban className="h-4 w-4 mr-1" />
                           {user.is_blacklisted ? t('unblacklist') : t('blacklist')}
