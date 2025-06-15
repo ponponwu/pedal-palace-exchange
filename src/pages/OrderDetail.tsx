@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import MainLayout from '@/components/layout/MainLayout';
@@ -91,15 +90,33 @@ const OrderDetail = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   
+  console.log('Order ID from URL:', orderId);
+  console.log('Available order keys:', Object.keys(mockOrderData));
+  
   const order = orderId ? mockOrderData[orderId as keyof typeof mockOrderData] : null;
+
+  console.log('Found order:', order);
 
   if (!order) {
     return (
       <MainLayout>
         <div className="container max-w-4xl px-4 py-16 mx-auto text-center">
           <h1 className="mb-4 text-2xl font-bold">找不到訂單</h1>
+          <p className="mb-4 text-gray-600">訂單編號: {orderId}</p>
           <p className="mb-8 text-gray-600">我們無法找到您要查看的訂單資訊。</p>
-          <Button onClick={() => navigate('/profile')}>
+          <div className="space-y-4">
+            <p className="text-sm text-gray-500">可用的訂單:</p>
+            <div className="space-y-2">
+              {Object.keys(mockOrderData).map(id => (
+                <Link key={id} to={`/order/${id}`}>
+                  <Button variant="outline" size="sm">
+                    查看訂單 {id}
+                  </Button>
+                </Link>
+              ))}
+            </div>
+          </div>
+          <Button className="mt-8" onClick={() => navigate('/profile')}>
             返回個人資料
           </Button>
         </div>
