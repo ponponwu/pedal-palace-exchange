@@ -18,6 +18,7 @@ import Search from "./pages/Search";
 import Messages from "./pages/Messages";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
+import OrderDetail from "./pages/OrderDetail";
 
 // Admin Pages
 import AdminLoginPage from "./pages/admin/AdminLoginPage";
@@ -52,6 +53,7 @@ function App() {
               <Route path="/messages" element={<Messages />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/order-success" element={<OrderSuccess />} />
+              <Route path="/order/:orderId" element={<OrderDetail />} />
               
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLoginPage />} />

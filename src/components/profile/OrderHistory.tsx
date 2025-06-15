@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
@@ -321,13 +321,11 @@ const OrderHistory = () => {
                 <TableCell>{renderStatusBadge(order.status)}</TableCell>
                 <TableCell>${order.total.toFixed(2)}</TableCell>
                 <TableCell>
-                  <Button 
-                    variant="ghost" 
-                    size="sm"
-                    onClick={() => setSelectedOrder(order)}
-                  >
-                    <Eye className="w-4 h-4 mr-1" />
-                    {t('viewDetails')}
+                  <Button asChild variant="ghost" size="sm">
+                    <Link to={`/order/${order.id}`}>
+                      <Eye className="w-4 h-4 mr-1" />
+                      {t('viewDetails')}
+                    </Link>
                   </Button>
                 </TableCell>
               </TableRow>
